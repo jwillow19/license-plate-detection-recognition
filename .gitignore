@@ -1,0 +1,8 @@
+test/
+train/
+results/
+img/
+
+*.csv
+*.pem
+*.pdf
