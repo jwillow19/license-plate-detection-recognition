@@ -2,6 +2,10 @@ test/
 train/
 results/
 img/
+car_bbox_out/
+__pycache__/
+.vscode/
+.ipynb_checkpoints/
 
 *.csv
 *.pem
