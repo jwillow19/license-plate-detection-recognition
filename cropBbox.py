@@ -51,7 +51,7 @@ for ind, row in results.iterrows():
 
         # crop and resize
         cropped_im = im[y:h, x:w]
-        cropped_im = cv2.resize(cropped_im, (224, 224))
+        # cropped_im = cv2.resize(cropped_im, (224, 224))
 
         output_name = image_encoding + '_instance_' + \
             str(instance_count) + '.jpg'
