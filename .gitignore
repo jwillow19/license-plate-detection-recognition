@@ -2,6 +2,7 @@ test/
 train/
 results/
 img/
+lp_out/
 car_bbox_out/
 __pycache__/
 .vscode/
