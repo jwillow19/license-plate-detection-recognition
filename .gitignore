@@ -4,6 +4,9 @@ results/
 img/
 lp_out/
 car_bbox_out/
+dataset_characters/
+
+
 __pycache__/
 .vscode/
 .ipynb_checkpoints/
@@ -12,4 +15,5 @@ __pycache__/
 *.pem
 *.pdf
 *.jpg
-
+*.png
+*.npy
