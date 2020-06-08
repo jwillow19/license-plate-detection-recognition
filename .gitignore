@@ -2,9 +2,24 @@ test/
 train/
 results/
 img/
-lp_out/
-car_bbox_out/
-dataset_characters/
+
+
+character_recognition/test/
+character_recognition/train/
+character_recognition/.ipynb_checkpoints/
+character_recognition/*.h5
+
+character_segmentation/.ipynb_checkpoints/
+
+pipeline/.ipynb_checkpoints/
+
+car_detection/
+car_detection/car_bbox_out/
+car_detection/results/
+car_detection/test/
+car_detection/.ipynb_checkpoints/
+
+wpod_net/
 
 
 __pycache__/
@@ -17,3 +32,6 @@ __pycache__/
 *.jpg
 *.png
 *.npy
+**/*.ipynb_checkpoints
+**/*.csv
+**/*.npy

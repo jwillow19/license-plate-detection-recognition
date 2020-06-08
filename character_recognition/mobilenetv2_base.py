@@ -1,3 +1,5 @@
+import json
+
 from keras.applications import MobileNetV2
 # Layers
 from keras.layers import GlobalAveragePooling2D
@@ -14,7 +16,7 @@ from keras.optimizers import Adam
 
 # Load pretrained MobileNetv2 and build layers on top
 
-def mobilev2_base(lr=1e-4, output_shape=36):
+def mobilev2_base(lr=1e-4, output_shape=36, train_base=True):
     '''
     Input: learning rate, lr_decay, output_shape=36 (36 classes)
     Output: compiled model built on top of pretrained mobilenetv2
@@ -22,14 +24,14 @@ def mobilev2_base(lr=1e-4, output_shape=36):
     base_model = MobileNetV2(
         # Load weights pretrained on ImageNet
         weights='imagenet',
-        input_shape=None,
-        input_tensor=Input(shape=(80, 80, 3)),
+        input_shape=(128, 128, 3),
+        input_tensor=Input(shape=(128, 128, 3)),
         # Exclude ImageNet classifier at the top
         include_top=False
     )
 
     # Freeze base_model
-    base_model.trainable = False
+    # base_model.trainable = False
 
     # Create new model on top
     # Instantiate variable for model input
@@ -52,21 +54,28 @@ def mobilev2_base(lr=1e-4, output_shape=36):
     #     decay_steps=10000,
     #     decay_rate=0.9)
 
-    opt = Adam(
-        learning_rate=lr,
-        beta_1=0.9,
-        beta_2=0.999,
-        epsilon=1e-07)
-    # Compile model - Adam optimizer, categorical loss, evaluate on accuracy
-    model.compile(optimizer=opt,
-                  loss='categorical_crossentropy',
-                  metrics=['accuracy'])
+    if train_base:
+        for layers in base_model.layers:
+            layers.trainable = True
+
+            opt = Adam(
+                learning_rate=lr,
+                beta_1=0.9,
+                beta_2=0.999,
+                epsilon=1e-07)
+            # Compile model - Adam optimizer, categorical loss, evaluate on accuracy
+            model.compile(optimizer=opt,
+                          loss='categorical_crossentropy',
+                          metrics=['accuracy'])
+
+    model_json = model.to_json()
+    with open("mobile_base.json", "w") as json_file:
+        json.dump(model_json, json_file)
+
+    # model.save_weights("model_weights.h5")
 
     return model
 
 
-# print('Creating model...')
-# model = mobilev2_base()
-# print('Saving model...')
-# # model.save('../model/mobilenetv2_base')
-# print('Model: ', model.summary())
+model = mobilev2_base()
+# model.summary()

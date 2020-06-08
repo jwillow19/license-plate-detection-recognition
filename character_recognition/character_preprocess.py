@@ -24,7 +24,7 @@ for data in char_data:
     print('Processing %i/%i' % (count, data_len))
     label = data.split('/')[-2]
     im = cv2.imread(data)
-    im = cv2.resize(im, (80, 80))
+    im = cv2.resize(im, (128, 128))
 
     X.append(im)
     labels.append(label)

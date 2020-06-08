@@ -58,11 +58,11 @@ def main():
 
     # Create model
     print('Creating model...')
-    model = mobilev2_base(lr=INIT_LR)
+    model = mobilev2_base(lr=INIT_LR, train_base=True)
 
     # Train Model
     print('Training...')
-    # if steps_per_epoch  is set then batch_size = None
+    # ASIDE: if steps_per_epoch is set then do not need to specify batch_size
     # model.fit returns a History istance
     results = model.fit(
         image_gen.flow(X_train, y_train, batch_size=BATCH_SIZE),
@@ -96,46 +96,10 @@ def main():
 
     # Save model architecture to JSON
     model_json = model.to_json()
-    with open("../model/mobilenet_char_recog.json", "w") as json_file:
-    json_file.write(model_json)
+    # model_name = 'mobilenet_char_recog_128in'
+    with open("../model/mobilenet_char_recog_128in.json", "w") as json_file:
+        json_file.write(model_json)
 
 
 if __name__ == '__main__':
     main()
-
-# INIT_LR = 1e-3
-# BATCH_SIZE = 64
-# EPOCHS = 30
-
-# Define learning-rate scheduler and checkpoints
-
-
-# def lr_scheduler(epoch, lr):
-#     decay_rate = 0.1
-#     decay_step = 90
-#     if epoch % decay_step == 0 and epoch:
-#         return lr * decay_rate
-#     return lr
-
-
-# callbacks
-# my_callbacks = [
-#     # EarlyStopping(monitor='val_loss', patience=5, verbose=0),
-#     ModelCheckpoint(filepath="License_character_recognition.h5",
-#                     verbose=1, save_weights_only=True),
-#     LearningRateScheduler(lr_scheduler)
-# ]
-# Create model
-# print('Creating model...')
-# model = mobilev2_base(lr=INIT_LR)
-
-# # Train Model
-# print('Training...')
-# # if steps_per_epoch  is set then batch_size = None
-# result = model.fit(
-#     image_gen.flow(X_train, y_train, batch_size=BATCH_SIZE),
-#     steps_per_epoch=len(X_train) // BATCH_SIZE,
-#     validation_data=(X_test, y_test),
-#     validation_steps=len(X_test) // BATCH_SIZE,
-#     epochs=EPOCHS, callbacks=my_callbacks,
-# )
